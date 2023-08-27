@@ -1,0 +1,74 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Usted es Gay?</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url(a.jpg);
+        }
+        h1 {
+            font-size: 24px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        #siButton, #noButton {
+            
+            font-size: 20px;
+            padding: 10px 20px;
+            position: relative; /* Añade posición relativa para permitir z-index */
+        }
+        #noButton {
+            margin-left: 20px;
+            transition: transform 0.5s;
+            z-index: 1; /* Establece un índice z para el botón "No" */
+        }
+    </style>
+</head>
+<body>
+    <h1>¿Usted es Gay?</h1>
+    <div class="button-container">
+    <a href="pagina2.html">
+        <button id="siButton" >Sí</button> 
+    </a> 
+        <button id="noButton">No</button>
+    </div>
+
+    <script>
+        const noButton = document.getElementById("noButton");
+        const siButton = document.getElementById("siButton");
+
+        noButton.addEventListener("click", () => {
+            const maxOffset = 50;
+            let randomX, randomY;
+            
+            do {
+                randomX = Math.random() * (2 * maxOffset) - maxOffset;
+                randomY = Math.random() * (2 * maxOffset) - maxOffset;
+            } while (isOverlap(noButton, siButton, randomX, randomY));
+            
+            noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+
+        // Función para verificar si hay superposición entre dos elementos
+        function isOverlap(elem1, elem2, offsetX, offsetY) {
+            const rect1 = elem1.getBoundingClientRect();
+            const rect2 = elem2.getBoundingClientRect();
+            
+            return (
+                rect1.left + offsetX < rect2.right &&
+                rect1.right + offsetX > rect2.left &&
+                rect1.top + offsetY < rect2.bottom &&
+                rect1.bottom + offsetY > rect2.top
+            );
+        }
+    </script>
+</body>
+</html>
